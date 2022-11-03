@@ -1,9 +1,10 @@
-resource "aws_instance" "kubernetes" {
+resource "aws_instance" "kube" {
     ami = var.ami
+    count = var.instance_count
     instance_type = var.instance_type
-    security_groups = ["kubernetes"]
+    security_groups = ["sg_kube"]
     key_name = var.aws_key
     tags = {
-        Name = var.ec2name
+        Name = element(var.instance_tags, count.index)
 }
 }
